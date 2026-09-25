@@ -2,6 +2,10 @@
 
 **Jev-class judgment from frozen open models — computation, not training.**
 
+![Open Medical Jev architecture — two frozen readers → per-option probabilities → mean fusion → router (confidence, auto-release gate, conformal set) → decision](assets/architecture.svg)
+
+<sub>Vector source: [`assets/architecture.svg`](assets/architecture.svg). Two frozen readers answer a yes/no judgment per option; the fit-free router turns their agreement into a confidence, an auto-release gate and a guaranteed candidate set. Constants: [`recipes/routing.yaml`](recipes/routing.yaml).</sub>
+
 > **Jev- and OpenJev-level results on national medical exams — with no training of any kind.**
 > On 600-item licensing-exam papers: within 2–3 points of Jev on the Chinese (0.8767 vs 0.8967)
 > and Indian (0.7900 vs 0.8133) papers — level with the OpenJev open-weights run there (ahead on
@@ -25,9 +29,7 @@ layer on top:
 
 No fine-tuning. No distillation. No corpus. Code + recipe only.
 
-![Open Medical Jev architecture — two frozen readers → per-option probabilities → mean fusion → router (confidence, auto-release gate, conformal set) → decision](assets/architecture.svg)
-
-<sub>Vector source: [`assets/architecture.svg`](assets/architecture.svg). Two frozen readers answer a yes/no judgment per option; the fit-free router turns their agreement into a confidence, an auto-release gate and a guaranteed candidate set. Constants: [`recipes/routing.yaml`](recipes/routing.yaml).</sub>
+**Model-agnostic by design.** Because nothing is trained, a newer open model is supported by swapping the reader and re-fitting the two small routing constants (with a verification pass on your own data) — the protocol, router and guarantees carry over unchanged, and there is no training pipeline to rebuild.
 
 ## Key results
 

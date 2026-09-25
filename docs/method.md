@@ -21,6 +21,11 @@ guarantees attached to the parts that can carry them.
   exchangeability*. Where the guarantee cannot hold (distribution shift,
   swapped readers), the documentation says so and the recalibration path is
   shipped.
+* **Frozen also means swappable.** Because nothing is trained, there is no
+  training pipeline to rebuild when a newer open model arrives: swap the
+  reader, re-fit the two routing constants on your own data (see
+  "Recalibration") and re-verify on a held-out set. The protocol, router and
+  guarantees carry over unchanged.
 
 ## Components
 

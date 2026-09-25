@@ -26,6 +26,11 @@ project's own pages for authoritative details. Facts below were checked on
   re-measured by us unless stated.
 * Community medical projects are listed for orientation; this repository does
   not benchmark against them.
+* **Model upgrades**: this project trains nothing, so adopting a newer open
+  model is a reader swap plus a re-fit of two routing constants — no
+  retraining step. Trained pipelines (e.g. OpenJev-style releases) generally
+  need to re-train / re-release weights for a new base; check their own pages
+  for their current policy.
 
 ## Non-affiliation
 
