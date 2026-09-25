@@ -7,10 +7,10 @@
 <sub>Vector source: [`assets/architecture.svg`](assets/architecture.svg). Two frozen readers answer a yes/no judgment per option; the fit-free router turns their agreement into a confidence, an auto-release gate and a guaranteed candidate set. Constants: [`recipes/routing.yaml`](recipes/routing.yaml).</sub>
 
 > **Jev- and OpenJev-level results on national medical exams — with no training of any kind.**
-> On 600-item licensing-exam papers: within 2–3 points of Jev on the Chinese (0.8767 vs 0.8967)
-> and Indian (0.7900 vs 0.8133) papers — level with the OpenJev open-weights run there (ahead on
-> India, +1.5 pp) — running locally on one 24 GB GPU at ~0.28 s/item, with 55% of the Chinese
-> paper auto-released at 98.2% accuracy. No fine-tuning, no distillation, no corpus.
+> On 600-item licensing-exam papers, the full 4-reading configuration lands within 2 points of Jev
+> on all three (0.8883 / 0.8634 / 0.8100 vs 0.8967 / 0.8833 / 0.8133) — level with the OpenJev
+> open-weights run (ahead on China and India; within 2.2 pp on the US paper) — running locally on
+> one 24 GB GPU. No fine-tuning, no distillation, no corpus.
 
 [![ci](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml/badge.svg)](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml)
 
@@ -50,17 +50,20 @@ protocols, caveats and every table.
 |---|---|---|---|
 | Jev 1.13.0 (hosted API) | 0.8967 | 0.8833 | 0.8133 |
 | OpenJev (open weights, GGUF Q4, local run) | 0.8800 | 0.8850 | 0.7750 |
-| **Open Medical Jev — 27B** | **0.8767** | 0.7437 | **0.7900** |
-| Open Medical Jev — 35B-A3B | 0.8667 | 0.7352 | 0.7533 |
+| **Open Medical Jev — 4 readings** (both readers × both readout structures) | **0.8883** | **0.8634** | **0.8100** |
+| Open Medical Jev — 27B (single reader) | 0.8767 | 0.7437 | 0.7900 |
+| Open Medical Jev — 35B-A3B (single reader) | 0.8667 | 0.7352 | 0.7533 |
 
 China is the real 2021 paper; US/India are fixed-seed equivalent draws. 593/600 readable for
 us on the US paper (7 read failures, excluded from the denominator). Timings are per-item
 model compute only (ours 0.27–0.31 s/item locally; Jev's API ≈1.02 s/item). All three
-systems clear each paper's written pass line (60% / 60% / 50%).
+systems clear each paper's written pass line (60% / 60% / 50%). The 4-reading row runs every
+reading the system offers — both readers × both readout structures — so its per-item compute is
+higher than the single-reader rows.
 
-![Full-set accuracy on the three national licensing exams](assets/exam_scores.svg)
+![Coverage-accuracy of Open Medical Jev (4 readings) vs Jev and OpenJev on the three exam papers](assets/coverage_accuracy.svg)
 
-<sub>**Full-set accuracy** on the three 600-item papers ((a) China — the real 2021 paper; (b, c) fixed-seed equivalent draws). Grey = external systems (Jev hosted API; OpenJev open weights, local Q4 run); blue = this project (frozen readers + routing, nothing trained). The x-axis starts at 0.70 for readability. Source and caveats: [reports/results_summary.md](reports/results_summary.md).</sub>
+<sub>**Coverage–accuracy** on the three 600-item papers ((a) China — the real 2021 paper; (b, c) fixed-seed equivalent draws). Each curve sorts its own system's answers by per-item confidence: x = fraction auto-answered, y = accuracy within that fraction. "4 readings" = both frozen readers × both readout structures, combined with fixed weights from each reading's measured accuracy — nothing trained. OpenJev exposes no per-item confidence, so it appears as a single square at full coverage. Jev's hosted confidence curve still leads at the highest precision tiers; toward full coverage the systems converge. Source: [reports/results_summary.md](reports/results_summary.md).</sub>
 
 **Calibration**: after a 1-parameter tier-conditioned temperature fit (on
 dev-300 only), the fused probability of `jev-decision-bench` reaches **ECE
@@ -124,7 +127,7 @@ scripts/                setup_env · download_models · serve_model · quickstar
 docs/                   method · protocol · evaluation · deploy · comparison
 tests/                  stdlib-only tests + hand-written toy fixtures
 reports/                results_summary.md
-assets/                 architecture.svg · architecture.png · exam_scores.svg · exam_scores.png
+assets/                 architecture.svg · architecture.png · coverage_accuracy.svg · coverage_accuracy.png
 ```
 
 ## Status and scope (v0.1)
