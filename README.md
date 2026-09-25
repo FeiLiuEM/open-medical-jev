@@ -41,19 +41,9 @@ distribution-shift caveat).
 
 ## How it works
 
-```
- item (question + options, optional context)
-        │
-        ├─ reader A: Qwen3.5-27B      pair prompt per option → yes/no Δ
-        └─ reader B: Qwen3.5-35B-A3B  pair prompt per option → yes/no Δ
-        │
-        ▼
- per-option probabilities → mean fusion → router
-        │                                   ├── confidence (agreed / discounted)
-        │                                   ├── auto-release gate (Chow)
-        ▼                                   └── conformal set (guaranteed)
- decision: answer · confidence · auto · candidate set
-```
+![Open Medical Jev architecture — two frozen readers → per-option probabilities → mean fusion → router (confidence, auto-release gate, conformal set) → decision](assets/architecture.svg)
+
+<sub>Vector source: [`assets/architecture.svg`](assets/architecture.svg). Two frozen readers answer a yes/no judgment per option; the fit-free router turns their agreement into a confidence, an auto-release gate and a guaranteed candidate set. Constants: [`recipes/routing.yaml`](recipes/routing.yaml).</sub>
 
 * **pair readout** (primary): "Is the candidate answer correct? Reply yes or
   no." — read yes/no token probabilities; the per-option signal is
@@ -108,6 +98,7 @@ scripts/                setup_env · download_models · serve_model · quickstar
 docs/                   method · protocol · evaluation · deploy · comparison
 tests/                  stdlib-only tests + hand-written toy fixtures
 reports/                results_summary.md
+assets/                 architecture.svg · architecture.png (diagram, vector + raster)
 ```
 
 ## Status and scope (v0.1)

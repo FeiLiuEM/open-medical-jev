@@ -3,21 +3,7 @@
 Open Medical Jev turns two frozen open models into one decision, with
 guarantees attached to the parts that can carry them.
 
-```
- item (question + candidate options, optional context)
-        │
-        ├── reader A: Qwen3.5-27B    (GGUF, llama.cpp)  ── pair/choice readout
-        └── reader B: Qwen3.5-35B-A3B (GGUF, llama.cpp) ── pair/choice readout
-        │
-        ▼
- per-option probabilities  ──►  fusion (mean)  ──►  router
-                                                     ├─ combined confidence
-                                                     ├─ auto-release gate
-                                                     └─ conformal set
-        │
-        ▼
- decision: {answer, confidence, auto, conformal_set, …}
-```
+![Open Medical Jev architecture — item → two frozen readers → per-option probabilities → mean fusion → router → decision](../assets/architecture.svg)
 
 ## Why this shape
 

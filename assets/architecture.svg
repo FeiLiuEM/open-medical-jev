@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 760" width="1240" height="760" role="img" aria-labelledby="omj-arch-title omj-arch-desc">
+  <title id="omj-arch-title">Open Medical Jev — system architecture</title>
+  <desc id="omj-arch-desc">Two frozen open models (Qwen3.5-27B and Qwen3.5-35B-A3B) each read a yes/no probability for every candidate option. A fit-free router combines the readings into a combined confidence, an auto-release gate (Chow's rule) and a split-conformal candidate set, producing the final decision; low-confidence items fall back to human review.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0A0E1A"/>
+      <stop offset="1" stop-color="#0D1730"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.14"/>
+      <stop offset="0.6" stop-color="#22D3EE" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hdrline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.8"/>
+      <stop offset="0.5" stop-color="#22D3EE" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#94A3B8" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#7C8BA3"/>
+    </marker>
+    <marker id="arr-cyan" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#22D3EE"/>
+    </marker>
+    <marker id="arr-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#F59E0B"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="1240" height="760" fill="url(#bg)"/>
+  <rect width="1240" height="760" fill="url(#grid)"/>
+  <ellipse cx="1006" cy="384" rx="400" ry="300" fill="url(#halo)"/>
+
+  <!-- header -->
+  <text x="56" y="60" fill="#67E8F9" font-size="12" font-family="'SF Mono','JetBrains Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="3">OPEN MEDICAL JEV / SYSTEM ARCHITECTURE</text>
+  <text x="56" y="104" fill="#E8EEF9" font-size="32" font-weight="700" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">Two frozen readers. One routed decision.</text>
+  <line x1="56" y1="140" x2="1184" y2="140" stroke="url(#hdrline)" stroke-width="1"/>
+
+  <!-- chips -->
+  <rect x="832" y="48" width="128" height="32" rx="6" fill="none" stroke="#94A3B8" stroke-opacity="0.30" stroke-width="1"/>
+  <text x="896" y="68" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="1">NO FINE-TUNING</text>
+  <rect x="972" y="48" width="96" height="32" rx="6" fill="none" stroke="#94A3B8" stroke-opacity="0.30" stroke-width="1"/>
+  <text x="1020" y="68" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="1">NO CORPUS</text>
+  <rect x="1080" y="48" width="104" height="32" rx="6" fill="none" stroke="#94A3B8" stroke-opacity="0.30" stroke-width="1"/>
+  <text x="1132" y="68" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="1">1&#215;24GB GPU</text>
+
+  <!-- arrows (before boxes) -->
+  <path d="M200 360 H228 V346 H252" fill="none" stroke="#7C8BA3" stroke-width="1.4" marker-end="url(#arr)"/>
+  <path d="M200 384 H236 V446 H252" fill="none" stroke="#7C8BA3" stroke-width="1.4" marker-end="url(#arr)"/>
+  <path d="M460 346 H512" fill="none" stroke="#7C8BA3" stroke-width="1.4" marker-end="url(#arr)"/>
+  <path d="M460 446 H512" fill="none" stroke="#7C8BA3" stroke-width="1.4" marker-end="url(#arr)"/>
+  <path d="M656 368 H696" fill="none" stroke="#7C8BA3" stroke-width="1.4" marker-end="url(#arr)"/>
+  <path d="M792 368 H832" fill="none" stroke="#7C8BA3" stroke-width="1.4" marker-end="url(#arr)"/>
+  <path d="M1080 504 V536" fill="none" stroke="#22D3EE" stroke-width="1.6" marker-end="url(#arr-cyan)"/>
+  <path d="M848 386 H816 V604 H712" fill="none" stroke="#F59E0B" stroke-width="1.4" stroke-dasharray="6,4" marker-end="url(#arr-amber)"/>
+
+  <!-- arrow labels -->
+  <rect x="1086" y="512" width="104" height="18" fill="#0C1526"/>
+  <text x="1092" y="526" fill="#67E8F9" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">auto-release</text>
+  <rect x="704" y="432" width="104" height="18" fill="#0C1526"/>
+  <text x="710" y="446" fill="#FBBF24" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">not released</text>
+
+  <!-- ITEM -->
+  <rect x="56" y="288" width="144" height="160" rx="8" fill="#94A3B8" fill-opacity="0.06" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="1"/>
+  <rect x="68" y="300" width="56" height="20" rx="4" fill="none" stroke="#94A3B8" stroke-opacity="0.40" stroke-width="0.8"/>
+  <text x="96" y="314" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="1">INPUT</text>
+  <text x="128" y="356" text-anchor="middle" fill="#E6EDF7" font-size="20" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">Item</text>
+  <text x="128" y="380" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">question + options</text>
+  <rect x="68" y="396" width="24" height="24" rx="4" fill="none" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="80" y="412" text-anchor="middle" fill="#9AA7BD" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">A</text>
+  <rect x="100" y="396" width="24" height="24" rx="4" fill="none" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="112" y="412" text-anchor="middle" fill="#9AA7BD" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">B</text>
+  <rect x="132" y="396" width="24" height="24" rx="4" fill="none" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="144" y="412" text-anchor="middle" fill="#9AA7BD" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">C</text>
+  <rect x="164" y="396" width="24" height="24" rx="4" fill="none" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="176" y="412" text-anchor="middle" fill="#9AA7BD" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">D</text>
+
+  <!-- READERS ZONE -->
+  <rect x="240" y="232" width="232" height="272" rx="8" fill="#94A3B8" fill-opacity="0.03" stroke="#94A3B8" stroke-opacity="0.25" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="256" y="258" fill="#67E8F9" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="3">READERS</text>
+  <text x="256" y="280" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">reads yes/no per option</text>
+  <rect x="252" y="300" width="208" height="92" rx="8" fill="#94A3B8" fill-opacity="0.06" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="264" y="320" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="2">READER A</text>
+  <text x="356" y="348" text-anchor="middle" fill="#E6EDF7" font-size="20" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">Qwen3.5-27B</text>
+  <text x="356" y="372" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">frozen &#183; GGUF &#183; llama.cpp</text>
+  <rect x="252" y="404" width="208" height="92" rx="8" fill="#94A3B8" fill-opacity="0.06" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="264" y="424" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="2">READER B</text>
+  <text x="356" y="452" text-anchor="middle" fill="#E6EDF7" font-size="20" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">Qwen3.5-35B-A3B</text>
+  <text x="356" y="476" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">frozen &#183; MoE offload</text>
+
+  <!-- SIGNALS -->
+  <rect x="512" y="296" width="144" height="168" rx="8" fill="#94A3B8" fill-opacity="0.06" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="524" y="318" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="1">SIGNALS</text>
+  <text x="584" y="346" text-anchor="middle" fill="#E6EDF7" font-size="16" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">per-option</text>
+  <text x="584" y="364" text-anchor="middle" fill="#E6EDF7" font-size="16" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">probabilities</text>
+  <line x1="548" y1="396" x2="620" y2="396" stroke="#7C8BA3" stroke-opacity="0.35" stroke-width="1"/>
+  <line x1="548" y1="426" x2="620" y2="426" stroke="#7C8BA3" stroke-opacity="0.35" stroke-width="1"/>
+  <rect x="552" y="390" width="12" height="6" fill="#67E8F9" fill-opacity="0.55"/>
+  <rect x="570" y="370" width="12" height="26" fill="#67E8F9" fill-opacity="0.85"/>
+  <rect x="588" y="388" width="12" height="8" fill="#67E8F9" fill-opacity="0.55"/>
+  <rect x="606" y="390" width="12" height="6" fill="#67E8F9" fill-opacity="0.55"/>
+  <rect x="552" y="420" width="12" height="6" fill="#67E8F9" fill-opacity="0.45"/>
+  <rect x="570" y="404" width="12" height="22" fill="#67E8F9" fill-opacity="0.70"/>
+  <rect x="588" y="416" width="12" height="10" fill="#67E8F9" fill-opacity="0.45"/>
+  <rect x="606" y="418" width="12" height="8" fill="#67E8F9" fill-opacity="0.45"/>
+  <text x="584" y="450" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">p_A(x) &#183; p_B(x)</text>
+
+  <!-- FUSION -->
+  <rect x="696" y="320" width="96" height="96" rx="8" fill="#94A3B8" fill-opacity="0.06" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="744" y="342" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="1">FUSION</text>
+  <text x="744" y="376" text-anchor="middle" fill="#E6EDF7" font-size="20" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">mean</text>
+  <text x="744" y="398" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">p_A, p_B</text>
+
+  <!-- ROUTER -->
+  <rect x="832" y="232" width="352" height="272" rx="8" fill="#22D3EE" fill-opacity="0.07" stroke="#22D3EE" stroke-opacity="0.70" stroke-width="1.2"/>
+  <text x="848" y="258" fill="#67E8F9" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="2">ROUTER &#183; FIT-FREE</text>
+  <rect x="848" y="276" width="320" height="68" rx="6" fill="#22D3EE" fill-opacity="0.05" stroke="#22D3EE" stroke-opacity="0.30" stroke-width="1"/>
+  <text x="864" y="302" fill="#E6EDF7" font-size="16" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">1 &#183; combined confidence</text>
+  <text x="864" y="326" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">agree: mean &#183; split: &#215;0.25</text>
+  <rect x="848" y="352" width="320" height="68" rx="6" fill="#22D3EE" fill-opacity="0.05" stroke="#22D3EE" stroke-opacity="0.30" stroke-width="1"/>
+  <text x="864" y="378" fill="#E6EDF7" font-size="16" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">2 &#183; auto-release gate</text>
+  <text x="864" y="402" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">Chow: release when conf &#8805; 1 &#8722; cost</text>
+  <rect x="848" y="428" width="320" height="68" rx="6" fill="#22D3EE" fill-opacity="0.05" stroke="#22D3EE" stroke-opacity="0.30" stroke-width="1"/>
+  <text x="864" y="454" fill="#E6EDF7" font-size="16" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">3 &#183; guaranteed candidate set</text>
+  <text x="864" y="478" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">split-conformal &#183; target error &#949;</text>
+
+  <!-- DECISION -->
+  <rect x="832" y="536" width="352" height="112" rx="8" fill="#94A3B8" fill-opacity="0.06" stroke="#22D3EE" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="848" y="558" fill="#67E8F9" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="1">DECISION</text>
+  <text x="848" y="584" fill="#C7D3E8" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">answer: "B"</text>
+  <text x="848" y="606" fill="#C7D3E8" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">confidence: 0.91</text>
+  <text x="848" y="628" fill="#C7D3E8" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">auto: true &#183; set: ["B"]</text>
+
+  <!-- HUMAN FALLBACK -->
+  <rect x="560" y="560" width="152" height="88" rx="8" fill="#F59E0B" fill-opacity="0.05" stroke="#F59E0B" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="572" y="582" fill="#FBBF24" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace" letter-spacing="1">FALLBACK</text>
+  <text x="636" y="610" text-anchor="middle" fill="#E6EDF7" font-size="16" font-weight="600" font-family="-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif">Human review</text>
+  <text x="636" y="632" text-anchor="middle" fill="#8DA2BF" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">split / low conf</text>
+
+  <!-- LEGEND -->
+  <line x1="56" y1="692" x2="1184" y2="692" stroke="#94A3B8" stroke-opacity="0.15" stroke-width="1"/>
+  <line x1="56" y1="720" x2="92" y2="720" stroke="#7C8BA3" stroke-width="1.4"/>
+  <text x="100" y="724" fill="#7C8BA3" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">data flow</text>
+  <line x1="200" y1="720" x2="236" y2="720" stroke="#F59E0B" stroke-width="1.4" stroke-dasharray="6,4"/>
+  <text x="244" y="724" fill="#7C8BA3" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">fallback route</text>
+  <rect x="392" y="708" width="20" height="16" rx="3" fill="#22D3EE" fill-opacity="0.07" stroke="#22D3EE" stroke-opacity="0.60" stroke-width="1"/>
+  <text x="420" y="724" fill="#7C8BA3" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">router: fit-free (no trained weights)</text>
+  <text x="1184" y="724" text-anchor="end" fill="#7C8BA3" font-size="12" font-family="'SF Mono','Noto Sans Mono',Menlo,Consolas,monospace">constants: recipes/routing.yaml &#183; docs/protocol.md</text>
+</svg>
