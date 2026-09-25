@@ -1,6 +1,6 @@
 """Command line interface.
 
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 
 Usage examples::
 

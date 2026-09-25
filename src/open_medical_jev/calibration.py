@@ -1,6 +1,6 @@
 """Calibration — split-conformal quantiles for the guaranteed candidate set.
 
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 
 The router's default ``CONFORMAL_Q`` constants were calibrated on an in-house
 Chinese medical licensing-exam set. **For a different task distribution,

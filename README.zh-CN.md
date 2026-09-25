@@ -52,5 +52,5 @@ python -m open_medical_jev evaluate --items mydata.jsonl \
 
 ## 许可
 
-Apache-2.0（[LICENSE](LICENSE)、[NOTICE](NOTICE)）。底座模型为阿里/Qwen 团队的 Apache-2.0
+MIT（[LICENSE](LICENSE)、[NOTICE](NOTICE)）。底座模型为阿里/Qwen 团队的 Apache-2.0
 开源模型，GGUF 量化来自 Unsloth 的 HF 仓库，llama.cpp（MIT）为本地推理运行时——均不随本仓库打包分发。

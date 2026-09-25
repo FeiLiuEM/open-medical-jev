@@ -5,7 +5,7 @@ Stdlib-only. Run either way::
     python3 tests/test_package.py     # no dependencies
     pytest tests/                     # if you have pytest
 
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 """
 
 import os

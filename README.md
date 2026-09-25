@@ -130,7 +130,7 @@ for how they relate.
 
 ## License
 
-Apache-2.0 ([LICENSE](LICENSE), [NOTICE](NOTICE)). The Qwen3.5 base models
+MIT ([LICENSE](LICENSE), [NOTICE](NOTICE)). The Qwen3.5 base models
 are Apache-2.0 by Alibaba / Qwen team; the GGUF quantizations come from the
 Unsloth HF repositories; llama.cpp (MIT) is the serving runtime. None of these
 are bundled with this repository.

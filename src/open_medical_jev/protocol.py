@@ -1,6 +1,6 @@
 """Protocol — exact prompt construction for the two readout structures.
 
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 
 The prompt strings below were verified token-by-token against the reference
 implementation (HuggingFace ``apply_chat_template(..., enable_thinking=False)``

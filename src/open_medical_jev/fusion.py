@@ -1,6 +1,6 @@
 """Fusion — combine per-option probabilities from several readers/signals.
 
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 
 Two small, deterministic combiners are provided:
 

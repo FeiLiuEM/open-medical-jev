@@ -1,6 +1,6 @@
 """Router — turn two models' per-option probabilities into one decision.
 
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 
 The router consumes per-option probabilities produced by the reader (one
 probability per candidate option, once for each of the two models) and returns

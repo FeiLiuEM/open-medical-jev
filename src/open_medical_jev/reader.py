@@ -1,6 +1,6 @@
 """Reader — query llama.cpp servers and turn them into per-option signals.
 
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 
 Two readout structures are supported, matching the measured protocol (see
 ``docs/protocol.md``):

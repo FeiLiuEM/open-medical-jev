@@ -1,6 +1,6 @@
 """Evaluate — batch pipeline: items -> two readers -> fusion -> router -> summary.
 
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 
 Input items are JSON objects (JSONL file) in the schema documented in
 ``docs/protocol.md``::

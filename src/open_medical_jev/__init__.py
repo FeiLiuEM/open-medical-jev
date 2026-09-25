@@ -8,7 +8,7 @@ outputs with a small routing layer: combined confidence, an auto-release gate
 No fine-tuning. No distillation. No corpus. The recipe is the code in this
 package plus the configuration files under ``recipes/``.
 
-License: Apache-2.0. See LICENSE and NOTICE.
+License: MIT. See LICENSE and NOTICE.
 """
 
 __version__ = "0.1.0"

@@ -3,6 +3,8 @@ Open Medical Jev
 
 Copyright 2026 Open Medical Jev contributors (https://github.com/FeiLiuEM)
 
+Licensed under the MIT License (see LICENSE).
+
 This repository contains code, recipes and documentation for routing-based
 decision making over frozen open-weight models. It does not contain, and does
 not redistribute, model weights, datasets or evaluation materials.

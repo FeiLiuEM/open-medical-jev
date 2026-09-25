@@ -1,7 +1,7 @@
 """Reader tests against a tiny mock llama-server (no models needed).
 
 Run:  python3 tests/test_reader_mock.py
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 """
 
 import json

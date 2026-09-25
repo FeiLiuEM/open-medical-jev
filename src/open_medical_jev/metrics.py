@@ -1,6 +1,6 @@
 """Metrics — coverage / accuracy views used by the evaluation reports.
 
-Part of Open Medical Jev (Apache-2.0).
+Part of Open Medical Jev (MIT).
 
 All functions here operate on plain Python lists (no numpy required):
 

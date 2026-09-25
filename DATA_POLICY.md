@@ -4,7 +4,7 @@ Open Medical Jev is published as **code + recipe** only. This is a hard
 boundary, not a preference.
 
 ## What this repository contains
-- Source code (Apache-2.0)
+- Source code (MIT)
 - Recipes: prompt templates, reader / calibration / routing configuration
 - Documentation, small **hand-written** test fixtures, and **aggregate**
   result tables
