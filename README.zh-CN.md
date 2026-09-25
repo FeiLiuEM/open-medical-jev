@@ -42,6 +42,10 @@ Open Medical Jev 把两个**未做任何微调**的官方开源模型（[Qwen3.5
 美/印为固定种子等价卷；美国卷 593/600 可读；用时为逐题纯计算（我们 0.27–0.31 秒/题，本地单卡；
 Jev API ≈1.02 秒/题）。三方均过及格线（60% / 60% / 50%）。
 
+![三国执业医师卷全卷准确率对照](assets/exam_scores.svg)
+
+<sub>**全卷准确率**（各卷 600 题；a 中国=真实 2021 真题，b/c 美/印=固定种子等价卷）。灰=外部系统（Jev 云 API；OpenJev 开源权重本地 Q4），蓝=本项目（冻结读数器 + 路由，全程无训练）；x 轴自 0.70 起（便于读数）。完整口径与边界见 [reports/results_summary.md](reports/results_summary.md)。</sub>
+
 校准后（1 参数、按档温度缩放）：jdb 的 ECE 达 **0.0096**（同基准 Jev 公开值 0.027，约 3 倍优）；
 中国考试卷 Conformal 四档全达标（ε=0.20 时集合=1，即给唯一答案）。
 完整表格、口径与边界见 [reports/results_summary.md](reports/results_summary.md)。

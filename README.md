@@ -58,6 +58,10 @@ us on the US paper (7 read failures, excluded from the denominator). Timings are
 model compute only (ours 0.27–0.31 s/item locally; Jev's API ≈1.02 s/item). All three
 systems clear each paper's written pass line (60% / 60% / 50%).
 
+![Full-set accuracy on the three national licensing exams](assets/exam_scores.svg)
+
+<sub>**Full-set accuracy** on the three 600-item papers ((a) China — the real 2021 paper; (b, c) fixed-seed equivalent draws). Grey = external systems (Jev hosted API; OpenJev open weights, local Q4 run); blue = this project (frozen readers + routing, nothing trained). The x-axis starts at 0.70 for readability. Source and caveats: [reports/results_summary.md](reports/results_summary.md).</sub>
+
 **Calibration**: after a 1-parameter tier-conditioned temperature fit (on
 dev-300 only), the fused probability of `jev-decision-bench` reaches **ECE
 0.0096** vs Jev's public 0.027 on the same benchmark (~3x better); dev-300:
@@ -120,7 +124,7 @@ scripts/                setup_env · download_models · serve_model · quickstar
 docs/                   method · protocol · evaluation · deploy · comparison
 tests/                  stdlib-only tests + hand-written toy fixtures
 reports/                results_summary.md
-assets/                 architecture.svg · architecture.png (diagram, vector + raster)
+assets/                 architecture.svg · architecture.png · exam_scores.svg · exam_scores.png
 ```
 
 ## Status and scope (v0.1)
