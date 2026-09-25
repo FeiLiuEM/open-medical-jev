@@ -19,7 +19,11 @@ layer on top:
 
 No fine-tuning. No distillation. No corpus. Code + recipe only.
 
-## Headline numbers
+![Open Medical Jev architecture — two frozen readers → per-option probabilities → mean fusion → router (confidence, auto-release gate, conformal set) → decision](assets/architecture.svg)
+
+<sub>Vector source: [`assets/architecture.svg`](assets/architecture.svg). Two frozen readers answer a yes/no judgment per option; the fit-free router turns their agreement into a confidence, an auto-release gate and a guaranteed candidate set. Constants: [`recipes/routing.yaml`](recipes/routing.yaml).</sub>
+
+## Key results
 
 Measured on the frozen models (nothing trained), against TypeSafe Jev 1.13.0
 on the same item sets. `coverage @ accuracy` for gated rows; full-set accuracy
@@ -40,10 +44,6 @@ calibration distribution matches (see `docs/evaluation.md` for the
 distribution-shift caveat).
 
 ## How it works
-
-![Open Medical Jev architecture — two frozen readers → per-option probabilities → mean fusion → router (confidence, auto-release gate, conformal set) → decision](assets/architecture.svg)
-
-<sub>Vector source: [`assets/architecture.svg`](assets/architecture.svg). Two frozen readers answer a yes/no judgment per option; the fit-free router turns their agreement into a confidence, an auto-release gate and a guaranteed candidate set. Constants: [`recipes/routing.yaml`](recipes/routing.yaml).</sub>
 
 * **pair readout** (primary): "Is the candidate answer correct? Reply yes or
   no." — read yes/no token probabilities; the per-option signal is
