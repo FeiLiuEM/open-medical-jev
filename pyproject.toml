@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "open-medical-jev"
+version = "0.1.0"
+description = "Routing-based yes/no judgments over frozen open models (Qwen3.5-27B / 35B-A3B): computation, not training."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Open Medical Jev contributors" }]
+keywords = ["llm", "routing", "conformal-prediction", "calibration", "llama.cpp", "qwen3.5"]
+classifiers = [
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.optional-dependencies]
+hf = ["transformers>=4.40"]
+
+[project.scripts]
+omj = "open_medical_jev.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

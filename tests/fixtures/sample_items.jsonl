@@ -1,0 +1,3 @@
+{"id": "toy-1", "input": "Which of the following is a primary color?", "options": [{"key": "A", "text": "Red"}, {"key": "B", "text": "Green"}, {"key": "C", "text": "Purple"}, {"key": "D", "text": "Brown"}], "answer": "A"}
+{"id": "toy-2", "input": "Which planet is known as the Red Planet?", "options": [{"key": "A", "text": "Venus"}, {"key": "B", "text": "Mars"}, {"key": "C", "text": "Jupiter"}, {"key": "D", "text": "Mercury"}], "answer": "B"}
+{"id": "toy-3", "input": "How many sides does a hexagon have?", "options": [{"key": "A", "text": "Five"}, {"key": "B", "text": "Six"}, {"key": "C", "text": "Seven"}, {"key": "D", "text": "Eight"}], "answer": "B"}

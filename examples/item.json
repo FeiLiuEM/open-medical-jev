@@ -1,0 +1,11 @@
+{
+  "id": "demo-1",
+  "input": "Which of the following is a chemical change?",
+  "options": [
+    {"key": "A", "text": "Melting ice"},
+    {"key": "B", "text": "Burning wood"},
+    {"key": "C", "text": "Cutting paper"},
+    {"key": "D", "text": "Dissolving sugar in water"}
+  ],
+  "answer": "B"
+}

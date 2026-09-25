@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: selftest (no dependencies)
+        run: PYTHONPATH=src python -m open_medical_jev selftest
+
+      - name: unit tests (stdlib only)
+        run: PYTHONPATH=src python tests/test_package.py
+
+      - name: reader mock tests (no models needed)
+        run: PYTHONPATH=src python tests/test_reader_mock.py
+
+      - name: data policy check
+        run: bash scripts/check_data_policy.sh

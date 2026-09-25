@@ -1,0 +1,25 @@
+# Routing configuration — keep in sync with src/open_medical_jev/router.py
+#
+# If you recalibrate (see docs/protocol.md → Recalibration), record the new
+# values here so every published number stays reproducible.
+
+router:
+  # combined confidence: mean(top1_a, top1_b) when the models agree,
+  # min(top1_a, top1_b) * agreement_discount when they disagree
+  agreement_discount: 0.25
+
+  # auto-release gate (Chow's rule): auto when confidence >= 1 - cost_ratio
+  cost_ratios: [0.05, 0.10, 0.20, 0.40]
+
+  # split-conformal quantile table: epsilon -> q (confidence threshold = 1 - q)
+  # calibrated on an in-house Chinese medical licensing-exam set (600 items,
+  # split-half; conservative values kept — see docs/evaluation.md)
+  conformal_q:
+    0.01: 0.9965
+    0.05: 0.9350
+    0.10: 0.8200
+    0.20: 0.6000
+
+consensus:              # multi-signal tiering policy (fusion.consensus)
+  margin_threshold: 0.25
+  auto_quorum: "ceil(0.75 * n_signals): L1 = unanimous + margin >= threshold, L2 = unanimous, L3 = quorum"

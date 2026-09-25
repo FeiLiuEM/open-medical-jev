@@ -1,0 +1,29 @@
+# --- internal / local only (never published) ---
+.recon/
+implementation-notes.md
+数字台账.md
+*.bak.*
+*.backup
+
+# --- python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# --- model weights & runtime artifacts (keep local; never commit) ---
+*.gguf
+*.safetensors
+*.bin
+models/
+results/
+logs/
+*.log
+.cache/
+
+# --- secrets ---
+.env
+.env.*
+*.key
+*.pem

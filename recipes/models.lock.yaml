@@ -1,0 +1,47 @@
+# Model lockfile — exact files measured with this recipe, plus sources.
+#
+# Weights are NOT bundled with the repository; scripts/download_models.sh
+# fetches them from the Unsloth HF GGUF repositories. The sha256 values below
+# were computed on the exact files used for the shipped results (2026-09-25):
+#
+#   sha256sum <file>      # compare before trusting any reproduction
+#
+models:
+  - id: qwen3.5-27b-q4
+    file: Qwen3.5-27B-UD-Q4_K_XL.gguf
+    role: "reader A (default; single 24GB GPU, fully on GPU)"
+    size_gb: 17.0
+    source_hf: unsloth/Qwen3.5-27B-GGUF
+    sha256: 13cb6228344898afa50d963c02ae0d991ae25094eea8837db8d0e452e91c5888
+
+  - id: qwen3.5-35b-a3b-q4
+    file: Qwen3.5-35B-A3B-UD-Q4_K_XL.gguf
+    role: "reader B (default; MoE experts partly on CPU via --n-cpu-moe 36)"
+    size_gb: 22.2
+    source_hf: unsloth/Qwen3.5-35B-A3B-GGUF
+    sha256: 69171bb5fbea1486d8390395bde313f4d511f8eb7810b752322316a60d8710d4
+
+  - id: qwen3.5-27b-q5
+    file: Qwen3.5-27B-UD-Q5_K_XL.gguf
+    role: "variant (tested; higher precision, ~3GB larger)"
+    size_gb: 20.2
+    source_hf: unsloth/Qwen3.5-27B-GGUF
+    sha256: 423ebe4779f784a2921da340a0fab0c372fbafb4b9eb502ae3768218de01597a
+
+  - id: qwen3.5-35b-a3b-q8
+    file: Qwen3.5-35B-A3B-UD-Q8_K_XL.gguf
+    role: "variant (tested; needs more VRAM or heavier CPU offload)"
+    size_gb: 38.7
+    source_hf: unsloth/Qwen3.5-35B-A3B-GGUF
+    sha256: ""
+
+base_models:
+  - repo: Qwen/Qwen3.5-27B        # Apache-2.0
+  - repo: Qwen/Qwen3.5-35B-A3B    # Apache-2.0
+
+tokenizer:
+  family: qwen3.5                 # shared vocabulary across the family
+  optional_hf_repo: Qwen/Qwen3.5-27B   # only for --tokenizer-backend hf
+
+runtime:
+  llama.cpp: "llama-server build supporting /tokenize with parse_special (2026-09 generation); see docs/deploy.md"

@@ -1,0 +1,39 @@
+Open Medical Jev
+================
+
+Copyright 2026 Open Medical Jev contributors (https://github.com/FeiLiuEM)
+
+This repository contains code, recipes and documentation for routing-based
+decision making over frozen open-weight models. It does not contain, and does
+not redistribute, model weights, datasets or evaluation materials.
+
+Third-party components referenced or used at runtime
+----------------------------------------------------
+1. Qwen3.5-27B / Qwen3.5-35B-A3B base models
+   Copyright Alibaba Group / Qwen team. Licensed under the Apache License,
+   Version 2.0.
+   Sources:
+     https://huggingface.co/Qwen/Qwen3.5-27B
+     https://huggingface.co/Qwen/Qwen3.5-35B-A3B
+   GGUF quantizations (downloaded separately by scripts/download_models.sh,
+   not bundled with this repository):
+     https://huggingface.co/unsloth/Qwen3.5-27B-GGUF
+     https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF
+
+2. llama.cpp (MIT License) — https://github.com/ggml-org/llama.cpp
+   Used as the local serving runtime (installed separately, not bundled).
+
+Independence
+------------
+Open Medical Jev is an independent project.
+Not affiliated with TypeSafe; "Jev" is their product.
+Not affiliated with Medical-OpenJev (fancc28/vindahi), MedJev (JunMa11),
+ClinicalJev (xzhou-code), or the OpenJev project. See docs/comparison.md
+for a description of the differences and relationships.
+
+Scope and safety
+----------------
+This project is research software for evaluating supervised "yes/no"
+judgments and routing decisions over open models. It is not a medical
+device and must not be used for diagnosis or treatment. Outputs are
+model-computed probabilities and do not constitute medical advice.
