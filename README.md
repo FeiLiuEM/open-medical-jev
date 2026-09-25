@@ -2,6 +2,12 @@
 
 **Jev-class judgment from frozen open models — computation, not training.**
 
+> **Jev- and OpenJev-level results on national medical exams — with no training of any kind.**
+> On 600-item licensing-exam papers: within 2–3 points of Jev on the Chinese (0.8767 vs 0.8967)
+> and Indian (0.7900 vs 0.8133) papers — level with the OpenJev open-weights run there (ahead on
+> India, +1.5 pp) — running locally on one 24 GB GPU at ~0.28 s/item, with 55% of the Chinese
+> paper auto-released at 98.2% accuracy. No fine-tuning, no distillation, no corpus.
+
 [![ci](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml/badge.svg)](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml)
 
 Open Medical Jev pairs two untouched, off-the-shelf open models
@@ -35,6 +41,20 @@ protocols, caveats and every table.
 | dev-300 (MedMCQA subset) | 0.8000 | 0.7933 | **0.8167** | 78.7% @ 0.9025 | 0.8300 |
 | JevBench (public, 70/72) | 0.8143 | 0.7857 | 0.8143 | 82.9% @ 0.9310 | 0.9860 |
 | jev-decision-bench (916/39 tasks) | 0.8395 | 0.8046 | 0.8373 | 87.1% @ 0.8697 | ~0.86 |
+
+### National licensing exams (600 items each; frozen models, nothing trained)
+
+| system | China (NMLE 2021) | US (USMLE equiv.) | India (NEET-PG equiv.) |
+|---|---|---|---|
+| Jev 1.13.0 (hosted API) | 0.8967 | 0.8833 | 0.8133 |
+| OpenJev (open weights, GGUF Q4, local run) | 0.8800 | 0.8850 | 0.7750 |
+| **Open Medical Jev — 27B** | **0.8767** | 0.7437 | **0.7900** |
+| Open Medical Jev — 35B-A3B | 0.8667 | 0.7352 | 0.7533 |
+
+China is the real 2021 paper; US/India are fixed-seed equivalent draws. 593/600 readable for
+us on the US paper (7 read failures, excluded from the denominator). Timings are per-item
+model compute only (ours 0.27–0.31 s/item locally; Jev's API ≈1.02 s/item). All three
+systems clear each paper's written pass line (60% / 60% / 50%).
 
 **Calibration**: after a 1-parameter tier-conditioned temperature fit (on
 dev-300 only), the fused probability of `jev-decision-bench` reaches **ECE

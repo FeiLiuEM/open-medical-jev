@@ -58,26 +58,43 @@ Notes: isotonic regression scored 0.0000 in-fit but degraded out-of-distribution
 temperature version was (see `recipes/routing.yaml` for constants, and
 `recalibrate` in docs/protocol.md to fit your own).
 
-## Guaranteed candidate sets (exam-paper example)
+## National licensing exams (600 items per paper)
 
-On a Chinese medical licensing-exam set (600 items), the split-conformal
-candidate set at each target error rate ε (calibration split-half in-set):
+Same frozen models, three national licensing-exam papers. China is the real 2021 paper;
+US/India are fixed-seed 600-item equivalent draws.
+
+| system | China (NMLE 2021) | US (USMLE equiv.) | India (NEET-PG equiv.) |
+|---|---|---|---|
+| Jev 1.13.0 (hosted API) | 0.8967 | 0.8833 | 0.8133 |
+| OpenJev (open weights, Q4, local) | 0.8800 | 0.8850 | 0.7750 |
+| **this project — 27B** | **0.8767** | 0.7437 | **0.7900** |
+| this project — 35B-A3B | 0.8667 | 0.7352 | 0.7533 |
+
+Reading notes: 593/600 readable for us on the US paper (7 read failures, excluded from the
+denominator); timings are per-item model compute only (this project 0.27–0.31 s/item locally;
+Jev's API ≈1.02 s/item); all three systems clear each paper's written pass line
+(60% / 60% / 50%).
+
+### Router operating points (Chinese paper)
+
+Split-conformal candidate set at each target error rate ε (calibration split-half in-set):
 
 | ε | measured coverage (target ≥ 1−ε) | avg set size |
 |---|---|---|
-| 0.01 | 99.33% | 2.95 |
-| 0.05 | 97.33% | 1.57 |
-| 0.10 | 93.33% | 1.18 |
+| 0.01 | 99.00% | 3.14 |
+| 0.05 | 95.33% | 1.42 |
+| 0.10 | 90.33% | 1.09 |
 | 0.20 | 88.00% | 1.00 (singleton) |
 
-Auto-release on the same set: Chow gate (cost ratio 0.10) released 53.3% of
-items at 98.12% accuracy; precision-optimised threshold reached 59.0% coverage
-at ≥98% precision.
+Auto-release: the Chow gate (cost ratio 0.10) released **55.0%** of items at **98.18%**
+accuracy; a precision-optimised threshold reached **51.2%** coverage at ≥98% measured
+precision (78.7% at ≥95%). For context, Jev's own confidence band at the same cost ratio
+releases 66.8% of this paper at 98.00% accuracy.
 
-**Distribution-shift caveat (important)**: these conformal quantiles were
-calibrated on the Chinese set. Applied to other distributions they can
-*undercover* — e.g. an Indian-set check at ε=0.05 measured 92.83% coverage
-(< 95% nominal). Recalibrate per distribution (docs/protocol.md).
+**Distribution-shift caveat (important)**: the conformal quantiles above were calibrated on
+the Chinese set. Applied to other distributions they can *undercover* — e.g. an Indian-set
+check at ε=0.05 measured 94.00% coverage (< 95% nominal), and the US paper undercovers at
+ε=0.05/0.10 as well. Recalibrate per distribution (docs/protocol.md).
 
 ## Throughput (as measured)
 
