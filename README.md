@@ -138,6 +138,9 @@ assets/                 architecture.svg · architecture.png · coverage_accurac
 * **Not included on purpose**: corpora, exam papers, per-item data for
   non-redistributable sets, and any trained weights (there are none).
   See [DATA_POLICY.md](DATA_POLICY.md).
+* **Development note**: this project was built with extensive AI assistance
+  (LLM coding agents); every number reported here is reproducible from the
+  shipped scripts and pinned recipes.
 * Planned next: weighted multi-signal fusion (the router is fit-free today),
   more languages, and serving recipes for more hardware tiers.
 

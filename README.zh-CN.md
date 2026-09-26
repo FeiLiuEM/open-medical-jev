@@ -71,6 +71,7 @@ python -m open_medical_jev evaluate --items mydata.jsonl \
 
 * 研究软件，非医疗器械，不得用于诊断或治疗（见 `NOTICE`）。
 * 不发布语料、真题、逐题数据与任何训练产物（见 [DATA_POLICY.md](DATA_POLICY.md)）。
+* 本项目的开发使用了 AI 编码助手（LLM agents）深度协助；仓库内报告的全部数字可由随附脚本与固定配方复算。
 * 校准常量与某个分布绑定；换分布要重新校准（见 protocol/evaluation 文档）。
 * 本项目独立，与 TypeSafe（Jev）、OpenJev、Medical-OpenJev、MedJev、ClinicalJev 等均无关联；
   生态关系见 [docs/comparison.md](docs/comparison.md)。
