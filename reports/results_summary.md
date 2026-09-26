@@ -70,6 +70,7 @@ US/India are fixed-seed 600-item equivalent draws.
 | **this project — 4 readings** (both readers × both readout structures) | **0.8883** | **0.8634** | **0.8100** |
 | this project — 27B (single reader) | 0.8767 | 0.7437 | 0.7900 |
 | this project — 35B-A3B (single reader) | 0.8667 | 0.7352 | 0.7533 |
+| Laya (open weights, zero-shot, best of its Base and Multilingual checkpoints) | 0.2600 | 0.2750 | 0.3117 |
 
 Reading notes: 593/600 readable for us on the US paper (7 read failures, excluded from the
 denominator); timings are per-item model compute only (this project 0.27–0.31 s/item locally;
@@ -77,6 +78,14 @@ Jev's API ≈1.02 s/item); all three systems clear each paper's written pass lin
 (60% / 60% / 50%). The 4-reading row runs every reading the system offers (both readers × both
 readout structures; per-item compute higher than the single-reader rows). OpenJev exposes no
 per-item confidence — its number is a full-run accuracy with no coverage curve.
+
+Laya (v0.3.20 released checkpoints, zero-shot) is shown at its best per paper: 0.2600 on China
+(multilingual checkpoint) and 0.2750 / 0.3117 on the US / India papers (English checkpoint).
+These sit at or near the chance baseline (0.20 China; 0.25 US/India), consistent with Laya's own
+documentation that the shipped checkpoints are weak zero-shot (0.362 against a 0.461 majority
+baseline on its own typed-decisions benchmark; fine-tuning is where it gains — 0.766). Its
+English checkpoint caps inputs at 512 tokens, so the longest US items may be clipped; the
+multilingual checkpoint (1,024-token window) saw all items and scored slightly lower.
 
 ### Router operating points (Chinese paper)
 

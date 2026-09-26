@@ -10,7 +10,8 @@
 > On 600-item licensing-exam papers, the full 4-reading configuration lands within 2 points of Jev
 > on all three (0.8883 / 0.8634 / 0.8100 vs 0.8967 / 0.8833 / 0.8133) — level with the OpenJev
 > open-weights run (ahead on China and India; within 2.2 pp on the US paper) — running locally on
-> one 24 GB GPU. No fine-tuning, no distillation, no corpus.
+> one 24 GB GPU — and far exceeds Laya's released checkpoints on the same papers (≈3× their
+> accuracy; they score at or near chance). No fine-tuning, no distillation, no corpus.
 
 [![ci](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml/badge.svg)](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml)
 
@@ -53,13 +54,16 @@ protocols, caveats and every table.
 | **Open Medical Jev — 4 readings** (both readers × both readout structures) | **0.8883** | **0.8634** | **0.8100** |
 | Open Medical Jev — 27B (single reader) | 0.8767 | 0.7437 | 0.7900 |
 | Open Medical Jev — 35B-A3B (single reader) | 0.8667 | 0.7352 | 0.7533 |
+| Laya (open weights, zero-shot, best of its Base and Multilingual checkpoints) | 0.2600 | 0.2750 | 0.3117 |
 
 China is the real 2021 paper; US/India are fixed-seed equivalent draws. 593/600 readable for
 us on the US paper (7 read failures, excluded from the denominator). Timings are per-item
 model compute only (ours 0.27–0.31 s/item locally; Jev's API ≈1.02 s/item). All three
 systems clear each paper's written pass line (60% / 60% / 50%). The 4-reading row runs every
 reading the system offers — both readers × both readout structures — so its per-item compute is
-higher than the single-reader rows.
+higher than the single-reader rows. The Laya row is the best of its two general checkpoints per
+paper, zero-shot as released; it scores at or near chance (0.20 on the 5-option Chinese paper;
+0.25 on the 4-option US/India papers).
 
 ![Coverage-accuracy of Open Medical Jev (4 readings) vs Jev and OpenJev on the three exam papers](assets/coverage_accuracy.svg)
 
