@@ -85,6 +85,6 @@ The core pipeline is stdlib-only; `transformers` is only needed for
 
 * Multi-user serving: put your own gateway/auth in front; these servers have
   no authentication by design (local research use).
-* The measured per-question latency (one 24 GB GPU, batch concurrency 8):
-  ≈0.076 s/question throughput, ≈0.28 s single-flight — readout-dependent;
-  re-measure on your hardware.
+* The measured per-question latency (one 24 GB GPU, 35B-A3B fully on GPU,
+  8-way concurrency, batch-8): **≈0.076 s/question (≈13 items/s)** — the
+  measured sweet spot; re-measure on your hardware.

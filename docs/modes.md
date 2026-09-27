@@ -5,15 +5,15 @@ much of the pipeline runs per item** — never in the models, prompts, or
 router. Everything below was measured on the three 600-item exam sets with the
 frozen models (nothing trained), 2026-09.
 
-| mode | what runs per item | speed | measured (China / US / India) |
-|---|---|---|---|
-| `fast` | one choice readout (35B-A3B); every item answered from that single reading | **≈0.076 s/item** at 8-way concurrency (single-flight ≈0.28 s)\* | accuracy 0.8667 / 0.7352 / 0.7533 |
-| `general` | quick pass + calibrated release gate; released items decided immediately, the rest run the **full four-reading path** | ≈1.5 / 2.7 / 2.3 of 4 reading waves per item | releases **84.2 / 44.2 / 55.8 %** of items at **93.07 / 93.13 / 93.13 %** precision; saves **≈63 / 33 / 42 %** of compute |
-| `high` | same cascade, stricter release gate | ≈2.0 / 2.9 / 3.1 of 4 reading waves per item | releases **65.5 / 35.4 / 29.7 %** at **97.20 / 97.14 / 97.19 %** precision; saves **≈49 / 27 / 22 %** of compute |
+| mode | what runs per item | measured (China / US / India) |
+|---|---|---|
+| `fast` | one choice readout (35B-A3B); every item answered from that single reading | accuracy 0.8667 / 0.7352 / 0.7533; **≈0.076 s/item** (≈13 items/s) at 8-way concurrency\* |
+| `general` | quick pass + calibrated release gate; released items decided immediately, the rest run the **full four-reading path** | releases **84.2 / 44.2 / 55.8 %** of items at **93.07 / 93.13 / 93.13 %** precision; saves **≈63 / 33 / 42 %** of compute |
+| `high` | same cascade, stricter release gate | releases **65.5 / 35.4 / 29.7 %** at **97.20 / 97.14 / 97.19 %** precision; saves **≈49 / 27 / 22 %** of compute |
 
-\* Speed measured on one 24 GB GPU machine running the 35B-A3B GGUF
-(`-np 8`, the shipped `scripts/serve_model.sh` configuration); re-measure on
-your hardware (see `docs/deploy.md`).
+\* Speed measured on one 24 GB GPU with the 35B-A3B running fully on GPU
+(batch-8 — the measured sweet spot — `-np 8` as in `scripts/serve_model.sh`);
+re-measure on your hardware (see `docs/deploy.md`).
 
 ## What the cascade does
 
