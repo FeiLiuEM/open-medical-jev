@@ -76,6 +76,22 @@ dev-300 only), the fused probability of `jev-decision-bench` reaches **ECE
 calibration distribution matches (see `docs/evaluation.md` for the
 distribution-shift caveat).
 
+## Modes
+
+Three compute presets over the same frozen readers (`evaluate --mode fast|general|high`;
+default off = full pipeline on both servers). They change *where the compute goes* —
+never the models, prompts or router:
+
+| mode | per item | measured on the exam sets (China / US / India) |
+|---|---|---|
+| `fast` | one choice readout (35B-A3B), released as-is | accuracy 0.8667 / 0.7352 / 0.7533; **≈0.076 s/item** at 8-way concurrency |
+| `general` | quick pass + 93 %-precision release gate; the rest run the full four-reading path | releases **84 / 44 / 56 %** of items; ≈**63 / 33 / 42 %** less compute than the full path everywhere |
+| `high` | same cascade, stricter 97 %-precision gate | releases **66 / 35 / 30 %**; ≈**49 / 27 / 22 %** less compute |
+
+Thresholds are distribution-specific — recalibrate on your own data; full
+tables, accounting and the recalibration procedure are in
+[docs/modes.md](docs/modes.md).
+
 ## How it works
 
 * **pair readout** (primary): "Is the candidate answer correct? Reply yes or

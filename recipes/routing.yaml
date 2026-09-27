@@ -23,3 +23,10 @@ router:
 consensus:              # multi-signal tiering policy (fusion.consensus)
   margin_threshold: 0.25
   auto_quorum: "ceil(0.75 * n_signals): L1 = unanimous + margin >= threshold, L2 = unanimous, L3 = quorum"
+
+modes:                  # staged compute presets (src/open_medical_jev/modes.py)
+  # release threshold tau on the quick-pass top-1 probability (35B-A3B choice)
+  gate_tau:
+    general: 0.636      # calibrated on the Chinese exam set at 93 % release precision
+    high: 0.838         # ... at 97 % (per-set values: see docs/modes.md)
+  accounting: "batched reading waves: quick = 1, full path = 4; saving = 1 - waves/4"

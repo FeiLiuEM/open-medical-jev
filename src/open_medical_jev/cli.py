@@ -21,6 +21,10 @@ Usage examples::
         --servers http://127.0.0.1:10361,http://127.0.0.1:10362 \
         --out results/run1
 
+    # staged compute presets (fast / general / high)
+    python -m open_medical_jev evaluate --items mydata.jsonl --mode fast \
+        --servers http://127.0.0.1:10362
+
     # recalibrate the conformal table from your own results
     python -m open_medical_jev calibrate --results results/run1.jsonl
 """
@@ -107,15 +111,23 @@ def cmd_read(args):
 
 
 def cmd_evaluate(args):
-    from .evaluate import evaluate
+    from .evaluate import evaluate, evaluate_mode
     items = _load_items(args.items)
     servers = args.servers.split(",")
-    rows, summ = evaluate(
-        items, servers, readout=args.readout,
-        tokenizer_backend=args.tokenizer_backend, hf_repo=args.hf_repo,
-        concurrency=args.concurrency, n_probs=args.n_probs,
-        max_tokens=args.max_tokens, cost_ratio=args.cost_ratio,
-        epsilon=args.epsilon)
+    if args.mode:
+        rows, summ = evaluate_mode(
+            items, servers, mode=args.mode,
+            tokenizer_backend=args.tokenizer_backend, hf_repo=args.hf_repo,
+            concurrency=args.concurrency, n_probs=args.n_probs,
+            max_tokens=args.max_tokens, cost_ratio=args.cost_ratio,
+            epsilon=args.epsilon, tau=args.gate)
+    else:
+        rows, summ = evaluate(
+            items, servers, readout=args.readout,
+            tokenizer_backend=args.tokenizer_backend, hf_repo=args.hf_repo,
+            concurrency=args.concurrency, n_probs=args.n_probs,
+            max_tokens=args.max_tokens, cost_ratio=args.cost_ratio,
+            epsilon=args.epsilon)
     print(json.dumps(summ, ensure_ascii=False, indent=2))
     if args.out:
         with open(args.out + ".jsonl", "w", encoding="utf-8") as f:
@@ -219,7 +231,8 @@ def build_parser():
 
     sp = sub.add_parser("evaluate", help="batch evaluation on labelled JSONL")
     sp.add_argument("--items", required=True)
-    sp.add_argument("--servers", required=True)
+    sp.add_argument("--servers", required=True,
+                    help="A,B (or a single URL for --mode fast: the fast reader)")
     sp.add_argument("--readout", choices=["pair", "choice"], default="pair")
     sp.add_argument("--tokenizer-backend", choices=["server", "hf"], default="server")
     sp.add_argument("--hf-repo", default="Qwen/Qwen3.5-27B")
@@ -228,6 +241,10 @@ def build_parser():
     sp.add_argument("--max-tokens", type=int, default=0)
     sp.add_argument("--cost-ratio", type=float, default=0.10)
     sp.add_argument("--epsilon", type=float, default=0.05)
+    sp.add_argument("--mode", choices=["fast", "general", "high"], default="",
+                    help="staged compute preset (empty = full pipeline on both servers)")
+    sp.add_argument("--gate", type=float, default=None,
+                    help="override the mode's release threshold (quick-pass top-1 probability)")
     sp.add_argument("--out", default="")
     sp.set_defaults(func=cmd_evaluate)
 

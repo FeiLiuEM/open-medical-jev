@@ -32,4 +32,10 @@ run evaluate --items tests/fixtures/sample_items.jsonl --servers "$A,$B" \
   echo "  (skipped: servers not reachable)"; }
 
 echo
-echo "done. For your own data see docs/protocol.md."
+echo "== 5) staged compute presets (fast = single reader; general/high = cascade) =="
+run evaluate --items tests/fixtures/sample_items.jsonl --mode fast --servers "$B" \
+  --out /tmp/omj_demo_fast || {
+  echo "  (skipped: server B not reachable)"; }
+
+echo
+echo "done. For your own data see docs/protocol.md — docs/modes.md for the presets."

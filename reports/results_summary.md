@@ -87,6 +87,25 @@ baseline on its own typed-decisions benchmark; fine-tuning is where it gains —
 English checkpoint caps inputs at 512 tokens, so the longest US items may be clipped; the
 multilingual checkpoint (1,024-token window) saw all items and scored slightly lower.
 
+### Modes (staged compute presets)
+
+`evaluate --mode fast|general|high` (see `docs/modes.md` for definitions, the
+accounting and the recalibration procedure). Measured 2026-09 on the same exam
+sets:
+
+| mode | China | US | India |
+|---|---|---|---|
+| fast — one 35B-A3B choice readout | 0.8667 | 0.7352 | 0.7533 |
+| general — released share @ released precision | 84.2 % @ 93.07 % | 44.2 % @ 93.13 % | 55.8 % @ 93.13 % |
+| general — compute saved vs full path | ≈63 % | ≈33 % | ≈42 % |
+| high — released share @ released precision | 65.5 % @ 97.20 % | 35.4 % @ 97.14 % | 29.7 % @ 97.19 % |
+| high — compute saved vs full path | ≈49 % | ≈27 % | ≈22 % |
+
+Full path accuracy on the same items (fit-free per-reader averaging):
+0.8917 / 0.8617 / 0.8083 — within 0.3 pp of the four-reading numbers above.
+Thresholds are distribution-specific (fitted on the Chinese set at 93 % / 97 %
+release precision).
+
 ### Router operating points (Chinese paper)
 
 Split-conformal candidate set at each target error rate ε (calibration split-half in-set):

@@ -22,5 +22,8 @@ jobs:
       - name: reader mock tests (no models needed)
         run: PYTHONPATH=src python tests/test_reader_mock.py
 
+      - name: mode tests (cascade gating + staged pipeline, mock servers)
+        run: PYTHONPATH=src python tests/test_modes.py
+
       - name: data policy check
         run: bash scripts/check_data_policy.sh
