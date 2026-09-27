@@ -80,6 +80,22 @@ runs per item; the models, prompts and router stay the same:
 | `general` | quick pass + 93 %-precision release gate; the rest run the full four-reading path | releases **84 / 44 / 56 %** of items; ≈**63 / 33 / 42 %** less compute than the full path everywhere |
 | `high` | same cascade, stricter 97 %-precision gate | releases **66 / 35 / 30 %**; ≈**49 / 27 / 22 %** less compute |
 
+Pick a mode on the command line:
+
+```bash
+# fast: a single server (the fast reader)
+python -m open_medical_jev evaluate --items mydata.jsonl --mode fast \
+    --servers http://127.0.0.1:10362
+
+# general / high: both readers; the quick pass runs on the second one
+python -m open_medical_jev evaluate --items mydata.jsonl --mode general \
+    --servers http://127.0.0.1:10361,http://127.0.0.1:10362
+```
+
+The summary reports the released share, per-stage accuracy and
+`est_saving_vs_full_path`, and every row carries its `stage` (`quick` / `full`).
+`--gate <tau>` overrides the threshold after your own calibration.
+
 Thresholds are distribution-specific, so recalibrate on your own data. Full
 tables, the accounting and the recalibration procedure are in
 [docs/modes.md](docs/modes.md).

@@ -65,7 +65,18 @@ Jev API ≈1.02 秒/题）。三方均过及格线（60% / 60% / 50%）。四读
 | `general` | 快速通道 + 93% 精度放行门；其余走完整四读数 | 放行 **84 / 44 / 56%**；算力比全程四读数省 **≈63 / 33 / 42%** |
 | `high` | 同一级联、97% 精度更严门 | 放行 **66 / 35 / 30%**；省 **≈49 / 27 / 22%** |
 
-阈值与分布绑定，请按你自己的数据重校准。完整表格、口径与重校准步骤见 [docs/modes.md](docs/modes.md)。
+命令行选择（`fast` 单服务器；`general` / `high` 双服务器，快通道跑在第二个）：
+
+```bash
+python -m open_medical_jev evaluate --items mydata.jsonl --mode fast \
+    --servers http://127.0.0.1:10362
+python -m open_medical_jev evaluate --items mydata.jsonl --mode general \
+    --servers http://127.0.0.1:10361,http://127.0.0.1:10362
+```
+
+运行汇总会给出释放占比、分段准确率与 `est_saving_vs_full_path`；逐题行带 `stage`
+（`quick` / `full`）字段；`--gate <τ>` 可在自行校准后覆写阈值。阈值与分布绑定，请按你自己的
+数据重校准。完整表格、口径与重校准步骤见 [docs/modes.md](docs/modes.md)。
 
 ## 快速开始
 
