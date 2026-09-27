@@ -32,6 +32,8 @@ No fine-tuning. No distillation. No corpus. Code + recipe only.
 
 **Model-agnostic by design.** Because nothing is trained, a newer open model is supported by swapping the reader and re-fitting the two small routing constants (with a verification pass on your own data) — the protocol, router and guarantees carry over unchanged, and there is no training pipeline to rebuild.
 
+**Three compute modes.** Over the same frozen readers: `fast` answers from one 35B-A3B readout at ≈0.076 s/item (≈13 items/s); `general` and `high` cascade — a calibrated quick pass releases 84 % / 66 % of items at 93 % / 97 % released-precision (Chinese paper), the rest run the full four-reading path, cutting compute by ≈63 % / ≈49 % versus the full path everywhere. Full tables: [docs/modes.md](docs/modes.md).
+
 ## Key results
 
 Measured on the frozen models (nothing trained), against TypeSafe Jev 1.13.0
