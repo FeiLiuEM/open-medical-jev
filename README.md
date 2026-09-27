@@ -6,13 +6,6 @@
 
 <sub>Vector source: [`assets/architecture.svg`](assets/architecture.svg). Two frozen readers answer a yes/no judgment per option; the fit-free router turns their agreement into a confidence, an auto-release gate and a guaranteed candidate set. Constants: [`recipes/routing.yaml`](recipes/routing.yaml).</sub>
 
-> **Jev- and OpenJev-level results on national medical exams, with no training of any kind.**
-> On 600-item licensing-exam papers the full 4-reading configuration lands within 2 points of Jev
-> on all three (0.8883 / 0.8634 / 0.8100 vs 0.8967 / 0.8833 / 0.8133). That is level with the
-> OpenJev open-weights run (ahead on China and India, within 2.2 pp on the US paper), and it runs
-> locally on one 24 GB GPU. It also far exceeds Laya's released checkpoints on the same papers
-> (≈3× their accuracy; they score at or near chance). No fine-tuning, no distillation, no corpus.
-
 [![ci](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml/badge.svg)](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml)
 
 Open Medical Jev pairs two untouched, off-the-shelf open models
@@ -21,12 +14,9 @@ Open Medical Jev pairs two untouched, off-the-shelf open models
 quantizations) as readers of a yes/no judgment task, and adds a small routing
 layer on top:
 
-* combined confidence: agreement between the two readers, with a measured
-  discount when they disagree.
-* auto-release gate: Chow's rule, so high confidence releases automatically
-  while the rest goes to human review.
-* guaranteed candidate set: split-conformal prediction set at a chosen error
-  rate, with a documented recalibration procedure.
+* combined confidence: agreement between the two readers, with a measured discount when they disagree.
+* auto-release gate: Chow's rule, so high confidence releases automatically while the rest goes to human review.
+* guaranteed candidate set: split-conformal prediction set at a chosen error rate, with a documented recalibration procedure.
 
 No fine-tuning. No distillation. No corpus. Code + recipe only.
 
