@@ -142,7 +142,7 @@ python -m open_medical_jev evaluate --items mydata.jsonl \
 | `demo` | router demo on synthetic inputs |
 | `check-server` / `verify-tokenizer` | health, tokenizer equivalence check |
 | `read` | one item through both readers + router → decision JSON |
-| `evaluate` | batch run on your labelled JSONL → rows + summary dict |
+| `evaluate` | batch run on your labelled JSONL → rows + summary dict; `--mode` selects the compute preset (`fast` / `general` / `high`; `--gate` overrides its release threshold) |
 | `calibrate` | recalibrate the conformal table from your own results |
 | `flip` | option-order flip rate (choice readout) |
 

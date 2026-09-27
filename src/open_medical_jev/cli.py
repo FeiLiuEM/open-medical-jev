@@ -21,9 +21,12 @@ Usage examples::
         --servers http://127.0.0.1:10361,http://127.0.0.1:10362 \
         --out results/run1
 
-    # staged compute presets (fast / general / high)
+    # staged compute presets: fast = one server (the fast reader);
+    # general / high = both servers, the quick pass runs on the second
     python -m open_medical_jev evaluate --items mydata.jsonl --mode fast \
         --servers http://127.0.0.1:10362
+    python -m open_medical_jev evaluate --items mydata.jsonl --mode general \
+        --servers http://127.0.0.1:10361,http://127.0.0.1:10362
 
     # recalibrate the conformal table from your own results
     python -m open_medical_jev calibrate --results results/run1.jsonl
