@@ -6,12 +6,12 @@
 
 <sub>Vector source: [`assets/architecture.svg`](assets/architecture.svg). Two frozen readers answer a yes/no judgment per option; the fit-free router turns their agreement into a confidence, an auto-release gate and a guaranteed candidate set. Constants: [`recipes/routing.yaml`](recipes/routing.yaml).</sub>
 
-> **Jev- and OpenJev-level results on national medical exams — with no training of any kind.**
-> On 600-item licensing-exam papers, the full 4-reading configuration lands within 2 points of Jev
-> on all three (0.8883 / 0.8634 / 0.8100 vs 0.8967 / 0.8833 / 0.8133) — level with the OpenJev
-> open-weights run (ahead on China and India; within 2.2 pp on the US paper) — running locally on
-> one 24 GB GPU — and far exceeds Laya's released checkpoints on the same papers (≈3× their
-> accuracy; they score at or near chance). No fine-tuning, no distillation, no corpus.
+> **Jev- and OpenJev-level results on national medical exams, with no training of any kind.**
+> On 600-item licensing-exam papers the full 4-reading configuration lands within 2 points of Jev
+> on all three (0.8883 / 0.8634 / 0.8100 vs 0.8967 / 0.8833 / 0.8133). That is level with the
+> OpenJev open-weights run (ahead on China and India, within 2.2 pp on the US paper), and it runs
+> locally on one 24 GB GPU. It also far exceeds Laya's released checkpoints on the same papers
+> (≈3× their accuracy; they score at or near chance). No fine-tuning, no distillation, no corpus.
 
 [![ci](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml/badge.svg)](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml)
 
@@ -21,18 +21,18 @@ Open Medical Jev pairs two untouched, off-the-shelf open models
 quantizations) as readers of a yes/no judgment task, and adds a small routing
 layer on top:
 
-* **combined confidence** — agreement between the two readers, with a measured
-  discount when they disagree,
-* **auto-release gate** — Chow's rule on the combined confidence (high
-  confidence releases automatically; the rest is routed to human review),
-* **guaranteed candidate set** — split-conformal prediction set at a chosen
-  error rate (with a documented recalibration procedure).
+* combined confidence: agreement between the two readers, with a measured
+  discount when they disagree.
+* auto-release gate: Chow's rule, so high confidence releases automatically
+  while the rest goes to human review.
+* guaranteed candidate set: split-conformal prediction set at a chosen error
+  rate, with a documented recalibration procedure.
 
 No fine-tuning. No distillation. No corpus. Code + recipe only.
 
-**Model-agnostic by design.** Because nothing is trained, a newer open model is supported by swapping the reader and re-fitting the two small routing constants (with a verification pass on your own data) — the protocol, router and guarantees carry over unchanged, and there is no training pipeline to rebuild.
+**Model-agnostic by design.** Because nothing is trained, supporting a newer open model means swapping the reader and re-fitting the two small routing constants (with a verification pass on your own data). The protocol, router and guarantees carry over unchanged, and there is no training pipeline to rebuild.
 
-**Three compute modes.** Over the same frozen readers: `fast` answers from one 35B-A3B readout at ≈0.076 s/item (≈13 items/s); `general` and `high` cascade — a calibrated quick pass releases 84 % / 66 % of items at 93 % / 97 % released-precision (Chinese paper), the rest run the full four-reading path, cutting compute by ≈63 % / ≈49 % versus the full path everywhere. Full tables: [docs/modes.md](docs/modes.md).
+**Three compute modes.** Over the same frozen readers: `fast` answers from one 35B-A3B readout at ≈0.076 s/item (≈13 items/s). `general` and `high` cascade: a calibrated quick pass releases 84 % / 66 % of items at 93 % / 97 % released-precision (Chinese paper), and everything else runs the full four-reading path, cutting compute by ≈63 % / ≈49 % versus the full path everywhere. Full tables: [docs/modes.md](docs/modes.md).
 
 ## Key results
 
@@ -62,14 +62,14 @@ China is the real 2021 paper; US/India are fixed-seed equivalent draws. 593/600 
 us on the US paper (7 read failures, excluded from the denominator). Timings are per-item
 model compute only (ours 0.27–0.31 s/item locally; Jev's API ≈1.02 s/item). All three
 systems clear each paper's written pass line (60% / 60% / 50%). The 4-reading row runs every
-reading the system offers — both readers × both readout structures — so its per-item compute is
+reading the system offers (both readers and both readout structures), so its per-item compute is
 higher than the single-reader rows. The Laya row is the best of its two general checkpoints per
 paper, zero-shot as released; it scores at or near chance (0.20 on the 5-option Chinese paper;
 0.25 on the 4-option US/India papers).
 
 ![Coverage-accuracy of Open Medical Jev (4 readings) vs Jev and OpenJev on the three exam papers](assets/coverage_accuracy.svg)
 
-<sub>**Coverage–accuracy** on the three 600-item papers ((a) China — the real 2021 paper; (b, c) fixed-seed equivalent draws). Each curve sorts its own system's answers by per-item confidence: x = fraction auto-answered, y = accuracy within that fraction. "4 readings" = both frozen readers × both readout structures, combined with fixed weights from each reading's measured accuracy — nothing trained. OpenJev exposes no per-item confidence, so it appears as a single square at full coverage. Jev's hosted confidence curve still leads at the highest precision tiers; toward full coverage the systems converge. Source: [reports/results_summary.md](reports/results_summary.md).</sub>
+<sub>**Coverage–accuracy** on the three 600-item papers ((a) China is the real 2021 paper; (b, c) are fixed-seed equivalent draws). Each curve sorts its own system's answers by per-item confidence: x = fraction auto-answered, y = accuracy within that fraction. "4 readings" = both frozen readers × both readout structures, combined with fixed weights from each reading's measured accuracy; nothing trained. OpenJev exposes no per-item confidence, so it appears as a single square at full coverage. Jev's hosted confidence curve still leads at the highest precision tiers; toward full coverage the systems converge. Source: [reports/results_summary.md](reports/results_summary.md).</sub>
 
 **Calibration**: after a 1-parameter tier-conditioned temperature fit (on
 dev-300 only), the fused probability of `jev-decision-bench` reaches **ECE
@@ -81,8 +81,8 @@ distribution-shift caveat).
 ## Modes
 
 Three compute presets over the same frozen readers (`evaluate --mode fast|general|high`;
-default off = full pipeline on both servers). They change *where the compute goes* —
-never the models, prompts or router:
+default off = full pipeline on both servers). They change only how much of the pipeline
+runs per item; the models, prompts and router stay the same:
 
 | mode | per item | measured on the exam sets (China / US / India) |
 |---|---|---|
@@ -90,20 +90,20 @@ never the models, prompts or router:
 | `general` | quick pass + 93 %-precision release gate; the rest run the full four-reading path | releases **84 / 44 / 56 %** of items; ≈**63 / 33 / 42 %** less compute than the full path everywhere |
 | `high` | same cascade, stricter 97 %-precision gate | releases **66 / 35 / 30 %**; ≈**49 / 27 / 22 %** less compute |
 
-Thresholds are distribution-specific — recalibrate on your own data; full
-tables, accounting and the recalibration procedure are in
+Thresholds are distribution-specific, so recalibrate on your own data. Full
+tables, the accounting and the recalibration procedure are in
 [docs/modes.md](docs/modes.md).
 
 ## How it works
 
 * **pair readout** (primary): "Is the candidate answer correct? Reply yes or
-  no." — read yes/no token probabilities; the per-option signal is
+  no." Read yes/no token probabilities; the per-option signal is
   `Δ = max logprob(yes) − max logprob(no)`.
 * **choice readout** (secondary): all options in one prompt; read letter
   probability mass.
 
 Both prompts, the decoding parameters and the tokenizer notes are pinned in
-[docs/protocol.md](docs/protocol.md) — that file is the contract; keep prompts
+[docs/protocol.md](docs/protocol.md). That file is the contract; keep prompts
 in `src/open_medical_jev/protocol.py` in sync with it.
 
 ## Quickstart
@@ -170,7 +170,7 @@ assets/                 architecture.svg · architecture.png · coverage_accurac
 
 Open Medical Jev is an independent project. Not affiliated with TypeSafe;
 "Jev" is their product. Not affiliated with Medical-OpenJev, MedJev,
-ClinicalJev or the OpenJev project — see [docs/comparison.md](docs/comparison.md)
+ClinicalJev or the OpenJev project; see [docs/comparison.md](docs/comparison.md)
 for how they relate.
 
 ## License
