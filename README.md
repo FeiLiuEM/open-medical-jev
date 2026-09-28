@@ -28,6 +28,10 @@ No fine-tuning. No distillation. No corpus. Code + recipe only.
 
 ## Key results
 
+![Coverage-accuracy of Open Medical Jev (4 readings) vs Jev and OpenJev on the three exam papers](assets/coverage_accuracy.svg)
+
+<sub>**Coverage–accuracy** on the three 600-item papers ((a) China is the real 2021 paper; (b, c) are fixed-seed equivalent draws). Each curve sorts its own system's answers by per-item confidence: x = fraction auto-answered, y = accuracy within that fraction. "4 readings" = both frozen readers × both readout structures, combined with fixed weights from each reading's measured accuracy; nothing trained. OpenJev exposes no per-item confidence, so it appears as a single square at full coverage. Jev's hosted confidence curve still leads at the highest precision tiers; toward full coverage the systems converge. Source: [reports/results_summary.md](reports/results_summary.md).</sub>
+
 Measured on the frozen models (nothing trained), against TypeSafe Jev 1.13.0
 on the same item sets. `coverage @ accuracy` for gated rows; full-set accuracy
 otherwise. See [reports/results_summary.md](reports/results_summary.md) for
@@ -58,10 +62,6 @@ reading the system offers (both readers and both readout structures), so its per
 higher than the single-reader rows. The Laya row is the best of its two general checkpoints per
 paper, zero-shot as released; it scores at or near chance (0.20 on the 5-option Chinese paper;
 0.25 on the 4-option US/India papers).
-
-![Coverage-accuracy of Open Medical Jev (4 readings) vs Jev and OpenJev on the three exam papers](assets/coverage_accuracy.svg)
-
-<sub>**Coverage–accuracy** on the three 600-item papers ((a) China is the real 2021 paper; (b, c) are fixed-seed equivalent draws). Each curve sorts its own system's answers by per-item confidence: x = fraction auto-answered, y = accuracy within that fraction. "4 readings" = both frozen readers × both readout structures, combined with fixed weights from each reading's measured accuracy; nothing trained. OpenJev exposes no per-item confidence, so it appears as a single square at full coverage. Jev's hosted confidence curve still leads at the highest precision tiers; toward full coverage the systems converge. Source: [reports/results_summary.md](reports/results_summary.md).</sub>
 
 **Calibration**: after a 1-parameter tier-conditioned temperature fit (on
 dev-300 only), the fused probability of `jev-decision-bench` reaches **ECE
