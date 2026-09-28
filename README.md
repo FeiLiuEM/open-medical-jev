@@ -6,6 +6,8 @@
 
 <sub>Vector source: [`assets/architecture.svg`](assets/architecture.svg). Two frozen readers answer a yes/no judgment per option; the fit-free router turns their agreement into a confidence, an auto-release gate and a guaranteed candidate set. Constants: [`recipes/routing.yaml`](recipes/routing.yaml).</sub>
 
+**Jev-level results from frozen open models:** within ~2 points of Jev on national medical exams (≈3× Laya's released checkpoints; level with OpenJev). No fine-tuning, no distillation, no corpus — and high compatibility with new base models. Three compute modes: `fast` runs at ≈0.076 s per question; `general` and `high` cascades cut compute by ≈63% / ≈49% at 93% / 97% released precision.
+
 [![ci](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml/badge.svg)](https://github.com/FeiLiuEM/open-medical-jev/actions/workflows/ci.yml)
 
 Open Medical Jev pairs two untouched, off-the-shelf open models
@@ -18,9 +20,7 @@ layer on top:
 * auto-release gate: Chow's rule, so high confidence releases automatically while the rest goes to human review.
 * guaranteed candidate set: split-conformal prediction set at a chosen error rate, with a documented recalibration procedure.
 
-No fine-tuning, no distillation, no corpus — code + recipe only. On national medical exams the frozen pair
-lands **Jev-level results**: within ~2 points of hosted Jev, **≈3× Laya's released checkpoints**, level with
-OpenJev — with high compatibility as new base models arrive.
+No fine-tuning. No distillation. No corpus. Code + recipe only.
 
 **Model-agnostic by design.** Because nothing is trained, supporting a newer open model means swapping the reader and re-fitting the two small routing constants (with a verification pass on your own data). The protocol, router and guarantees carry over unchanged, and there is no training pipeline to rebuild.
 
