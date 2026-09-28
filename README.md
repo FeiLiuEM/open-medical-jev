@@ -18,7 +18,9 @@ layer on top:
 * auto-release gate: Chow's rule, so high confidence releases automatically while the rest goes to human review.
 * guaranteed candidate set: split-conformal prediction set at a chosen error rate, with a documented recalibration procedure.
 
-No fine-tuning. No distillation. No corpus. Code + recipe only.
+No fine-tuning, no distillation, no corpus — code + recipe only. On national medical exams the frozen pair
+lands **Jev-level results**: within ~2 points of hosted Jev, **≈3× Laya's released checkpoints**, level with
+OpenJev — with high compatibility as new base models arrive.
 
 **Model-agnostic by design.** Because nothing is trained, supporting a newer open model means swapping the reader and re-fitting the two small routing constants (with a verification pass on your own data). The protocol, router and guarantees carry over unchanged, and there is no training pipeline to rebuild.
 
